@@ -15,17 +15,20 @@ pygame.display.set_icon(icon)
 
 background = pygame.image.load('1195724.jpg')
 
-
+#pygame.display.flip()
+#clock.tick(60)
+#Updating window
+clock=pygame.time.Clock()
 #Speed
-ball_speed_x = 9
-ball_speed_y = 9
-player_speed = 9
+ball_speed_x = 2
+ball_speed_y = 2
+player_speed = 2
 def ball_restart():
     global ball_speed_x ,ball_speed_y
     ball.x = screen_width/2-15
     ball.y = screen_height/2-15
-    ball_speed_x = 9 * random.choice((1,-1))
-    ball_speed_y = 9 * random.choice((1,-1))
+    ball_speed_x = 3 * random.choice((1,-1))
+    ball_speed_y = 3 * random.choice((1,-1))
 #Definition
 score_player1 = 0
 score_player2 = 0
@@ -39,7 +42,7 @@ def ball_animation():
     ball.x += ball_speed_x
     ball.y += ball_speed_y
     if ball.top <= 0 or ball.bottom >= screen_height:
-        ball_speed_y *= -1.05
+        ball_speed_y *= -1.012
 
     if ball.right >= screen_width:
         score_player1 += 1
@@ -48,7 +51,7 @@ def ball_animation():
         score_player2 += 1
         ball_restart()
     if ball.colliderect(player1) or ball.colliderect(player2):
-        ball_speed_x *= -1.05
+        ball_speed_x *= -1.01
 
 
 def player_animation():
@@ -81,27 +84,22 @@ while run:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             run = False
-    #Updating window
+
     
-    screen.blit(background, (0,0))
-    pygame.display.flip()
-    clock.tick(60)
-
-
     #Graphics
     screen.fill("black")
+    screen.blit(background, (screen_width,screen_height))
     pygame.draw.ellipse(screen,(255,255,255),ball)
-    player1 = pygame.draw.rect(screen,(255,255,255),(0,x,9,200))
-    player2 = pygame.draw.rect(screen,(255,255,255),(screen_width-10,y,9,200))
-    pygame.draw.line(screen,(255,255,255),(screen_width/2-1,0),(screen_width/2-1,screen_height),2)
-    font1 = pygame.font.SysFont("comicsans",50)
+    player1 = pygame.draw.rect(screen,(68,63,199),(0,x,9,200))
+    player2 = pygame.draw.rect(screen,(68,63,199),(screen_width-10,y,9,200))
+    pygame.draw.line(screen,(255,200,200),(screen_width/2-1,0),(screen_width/2-1,screen_height),5)
+    pygame.draw.circle(screen,(255,255,255),[screen_width/2-1,screen_height/2], 170, 3)
+    font1 = pygame.font.SysFont("Times New Roman",50)
     text1 = font1.render("Score:" + str(score_player1),1,(225,225,225))
-    font2 = pygame.font.SysFont("comicsans",50)
+    font2 = pygame.font.SysFont("Times New Roman",50)
     text2 = font2.render("Score:" + str(score_player2),1,(225,225,225))
     screen.blit(text1,(0,0))
     screen.blit(text2,(screen_width-text2.get_width(),0))
-
-
     pygame.display.update()
     
     
